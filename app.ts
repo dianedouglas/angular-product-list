@@ -8,7 +8,7 @@ import { Component } from "angular2/core";
   selector: 'inventory-app', //each of these is a key. lots of options for configuring a component.
   template: `
     <div class="inventory-app">
-      <h1>{{ product.name }}</h1>
+      <h1 *ngFor="#currentProduct of products">{{ currentProduct.name }}</h1>
     </div>
   `
   // using the {{}} mustache tags is called template binding. Use value of expression inside brackets.
@@ -16,12 +16,17 @@ import { Component } from "angular2/core";
 
 //this is the component controller.
 class InventoryApp {
-  product: Product; // instance variable. can be used in this component's view.
+  products: Product[]; // instance variable. can be used in this component's view.
 
   constructor(){
     // when we make a new instance of the component, this constructor is called.
     // setup tasks go here. To test it out, we're creating a product and storing it in the instance variable.
-    this.product = new Product('NEATHAT', 'A nice hat.', '/resources/images/products/hat.jpg', ['Men', 'Accessories', 'Hats'], 29.99);
+    this.products = [
+      new Product('MYSHOES', 'Black Runners', '/resources/images/products/shoes.jpg', ['Men', 'Shoes', 'Running Shoes'], 39.99),
+      new Product('SWEETJACKET', 'Green Jacket', '/resources/images/products/jacket.jpg', ['Women', 'Apparel', 'Jackets & Vests'], 59.99),
+      new Product('NEATHAT', 'Purple hat', '/resources/images/products/hat.jpg', ['Men', 'Accessories', 'Hats'], 79.99),
+    ];
+
   }
 
 }
