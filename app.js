@@ -9,13 +9,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 /// <reference path="node_modules/angular2/typings/browser.d.ts"/>
 var browser_1 = require("angular2/platform/browser");
 var core_1 = require("angular2/core");
+// top level app component
+// this is the component decorator.
 var InventoryApp = (function () {
     function InventoryApp() {
+        // when we make a new instance of the component, this constructor is called.
+        // setup tasks go here. To test it out, we're creating a product and storing it in the instance variable.
+        this.product = new Product('NEATHAT', 'A nice hat.', '/resources/images/products/hat.jpg', ['Men', 'Accessories', 'Hats'], 29.99);
     }
     InventoryApp = __decorate([
         core_1.Component({
             selector: 'inventory-app',
-            template: "\n    <div class=\"inventory-app\">\n      Show products here.\n    </div>\n  "
+            template: "\n    <div class=\"inventory-app\">\n      <h1>{{ product.name }}</h1>\n    </div>\n  "
         })
     ], InventoryApp);
     return InventoryApp;
