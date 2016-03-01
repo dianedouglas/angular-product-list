@@ -2,7 +2,7 @@
   "name": "hello-angular",
   "version": "1.0.0",
   "private": true,
-  "scripts": {  },
+  "scripts": {},
   "license": "ISC",
   "dependencies": {
     "angular2": "2.0.0-beta.7",
