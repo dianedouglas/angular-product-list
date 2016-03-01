@@ -9,15 +9,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 /// <reference path="node_modules/angular2/typings/browser.d.ts"/>
 var browser_1 = require("angular2/platform/browser");
 var core_1 = require("angular2/core");
-var App = (function () {
-    function App() {
+var InventoryApp = (function () {
+    function InventoryApp() {
     }
-    App = __decorate([
+    InventoryApp = __decorate([
         core_1.Component({
-            selector: 'app',
-            template: "\n    <h3>Hello Angular!</h3>\n  "
+            selector: 'inventory-app',
+            template: "\n    <div class=\"inventory-app\">\n      Show products here.\n    </div>\n  "
         })
-    ], App);
-    return App;
+    ], InventoryApp);
+    return InventoryApp;
 }());
-browser_1.bootstrap(App);
+browser_1.bootstrap(InventoryApp);
+// model
+var Product = (function () {
+    function Product(sku, name, imageUrl, department, price) {
+        this.sku = sku;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.department = department;
+        this.price = price;
+    }
+    return Product;
+}());

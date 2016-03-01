@@ -9,3 +9,12 @@ gulp.task('serve', function() {
     }
   });
 });
+
+//setup:
+/*
+- clone repo
+- npm install
+- npm install gulp -g
+- npm install typescript -g
+- gulp serve
+*/

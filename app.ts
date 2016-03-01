@@ -3,15 +3,17 @@
 import { bootstrap } from "angular2/platform/browser";
 import { Component } from "angular2/core";
 @Component({
-  selector: 'app',
+  selector: 'inventory-app',
   template: `
-    <h3>Hello Angular!</h3>
+    <div class="inventory-app">
+      Show products here.
+    </div>
   `
 })
-class App {
+class InventoryApp {
 
 }
-bootstrap(App);
+bootstrap(InventoryApp);
 
 // model
 class Product {
@@ -20,6 +22,6 @@ class Product {
     public name: string,
     public imageUrl: string,
     public department: string,
-    public price: number,
+    public price: number
   ){}
 }
