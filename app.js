@@ -78,7 +78,7 @@ var ProductRow = (function () {
             selector: 'product-row',
             inputs: ['product'],
             directives: [ProductImage, ProductDepartment, PriceDisplay],
-            template: "\n    <h2>{{ product.name }}</h2>\n    <product-image [product]=\"product\"></product-image>\n    <p>Product SKU: {{ product.sku }}</p>\n    <product-department [product]=\"product\"></product-department>\n    <price-display [price]=\"product.price\"></price-display>\n  "
+            template: "\n    <h1>{{ product.name }}</h1>\n    <product-image [product]=\"product\"></product-image>\n    <p>Product SKU: {{ product.sku }}</p>\n    <product-department [product]=\"product\"></product-department>\n    <price-display [price]=\"product.price\"></price-display>\n  "
         })
     ], ProductRow);
     return ProductRow;

@@ -66,7 +66,7 @@ class ProductDepartment {
   inputs: ['product'],
   directives: [ProductImage, ProductDepartment, PriceDisplay],
   template: `
-    <h2>{{ product.name }}</h2>
+    <h1>{{ product.name }}</h1>
     <product-image [product]="product"></product-image>
     <p>Product SKU: {{ product.sku }}</p>
     <product-department [product]="product"></product-department>

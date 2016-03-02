@@ -8,6 +8,11 @@ gulp.task('serve', function() {
       index: "index.html"
     }
   });
+  gulp.watch(['*.js'], ['jsBuild']);
+});
+
+gulp.task('jsBuild', function(){
+  browserSync.reload();
 });
 
 //setup:
