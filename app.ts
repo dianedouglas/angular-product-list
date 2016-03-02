@@ -2,6 +2,7 @@
 /// <reference path="node_modules/angular2/typings/browser.d.ts"/>
 import { bootstrap } from "angular2/platform/browser";
 import { Component } from "angular2/core";
+// dont forget to import EventEmitter and to declare your components from child up to parent.
 import {EventEmitter} from 'angular2/core';
 // top level app component
 // this is the component decorator.
@@ -52,12 +53,13 @@ class MyComponent {
 */
 @Component({
   selector: 'product-row',
+  inputs: ['product'],
   template: `
-    <p>yo</p>
+    <p>yo check out this cool {{ product.name }}</p>
   `
 })
 class ProductRow{
-
+  product: Product;
 }
 
 
@@ -68,11 +70,18 @@ class ProductRow{
   inputs: ['productList'], // array of strings = input keys to pass data like our array of products to this child component
   outputs: ['onProductSelected'],
   template: `
-  <h3 *ngFor="#currentProduct of productList"
-    (click)=clicked(currentProduct)>
-    {{ currentProduct.name }}</h3>
+  <product-row *ngFor="#currentProduct of productList"
+    [product]="currentProduct"
+    (click)=clicked(currentProduct)
+    [class.selected]="isSelected(currentProduct)">
+    </product-row>
   `
 })
+// when the product row element emits its built in click event, we trigger the clicked function in products list and sent out the currentProduct
+// [class.selected]= sets the class "selected" on the current component equal to true or false based on the output of the "methodOnTheRight(argument)"
+// remember that both the 'clicked' method and the 'isSelected' method are called from the products-list template, so they are calling methods in the products-list controlelr class, even though they are being called from a child component tag. To call the child component's methods, do it from the child component's template.
+// when using child components in a template as above, the right side of the equations in the template refer to local variables or methods from the controller class.
+// left side of equations in the template refer to parts of the child component - [] = input, () = output.
 class ProductsList {
   productList: Product[];
   onProductSelected: EventEmitter<Product>;
@@ -80,8 +89,17 @@ class ProductsList {
   constructor(){
     this.onProductSelected = new EventEmitter();
   }
-  clicked(clickedProduct: Product){
+  clicked(clickedProduct: Product): void{
+    this.currentProduct = clickedProduct;
     this.onProductSelected.emit(clickedProduct);
+  }
+  isSelected(product: Product): boolean {
+    //this method returns true/false to either add the selected class or not to the current row.
+    if(!product || !this.currentProduct){
+      return false;
+    } else {
+      return product.sku === this.currentProduct.sku;
+    }
   }
 }
 

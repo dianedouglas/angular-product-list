@@ -9,6 +9,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 /// <reference path="node_modules/angular2/typings/browser.d.ts"/>
 var browser_1 = require("angular2/platform/browser");
 var core_1 = require("angular2/core");
+// dont forget to import EventEmitter and to declare your components from child up to parent.
 var core_2 = require('angular2/core');
 // top level app component
 // this is the component decorator.
@@ -61,7 +62,8 @@ var ProductRow = (function () {
     ProductRow = __decorate([
         core_1.Component({
             selector: 'product-row',
-            template: "\n    <p>yo</p>\n  "
+            inputs: ['product'],
+            template: "\n    <p>yo check out this cool {{ product.name }}</p>\n  "
         })
     ], ProductRow);
     return ProductRow;
@@ -71,7 +73,17 @@ var ProductsList = (function () {
         this.onProductSelected = new core_2.EventEmitter();
     }
     ProductsList.prototype.clicked = function (clickedProduct) {
+        this.currentProduct = clickedProduct;
         this.onProductSelected.emit(clickedProduct);
+    };
+    ProductsList.prototype.isSelected = function (product) {
+        //this method returns true/false to either add the selected class or not to the current row.
+        if (!product || !this.currentProduct) {
+            return false;
+        }
+        else {
+            return product.sku === this.currentProduct.sku;
+        }
     };
     ProductsList = __decorate([
         core_1.Component({
@@ -79,7 +91,7 @@ var ProductsList = (function () {
             directives: [ProductRow],
             inputs: ['productList'],
             outputs: ['onProductSelected'],
-            template: "\n  <h3 *ngFor=\"#currentProduct of productList\"\n    (click)=clicked(currentProduct)>\n    {{ currentProduct.name }}</h3>\n  "
+            template: "\n  <product-row *ngFor=\"#currentProduct of productList\"\n    [product]=\"currentProduct\"\n    (click)=clicked(currentProduct)\n    [class.selected]=\"isSelected(currentProduct)\">\n    </product-row>\n  "
         })
     ], ProductsList);
     return ProductsList;
