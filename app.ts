@@ -2,6 +2,7 @@
 /// <reference path="node_modules/angular2/typings/browser.d.ts"/>
 import { bootstrap } from "angular2/platform/browser";
 import { Component } from "angular2/core";
+import {EventEmitter} from 'angular2/core';
 // top level app component
 // this is the component decorator.
 
@@ -65,12 +66,23 @@ class ProductRow{
   selector: 'products-list',
   directives: [ProductRow], // means we're using the component ProductRow in this template.
   inputs: ['productList'], // array of strings = input keys to pass data like our array of products to this child component
+  outputs: ['onProductSelected'],
   template: `
-  <h3 *ngFor="#currentProduct of productList">{{ currentProduct.name }}</h3>
+  <h3 *ngFor="#currentProduct of productList"
+    (click)=clicked(currentProduct)>
+    {{ currentProduct.name }}</h3>
   `
 })
 class ProductsList {
   productList: Product[];
+  onProductSelected: EventEmitter<Product>;
+  currentProduct: Product; //reference to the clicked product. "local component state, only used inside component"
+  constructor(){
+    this.onProductSelected = new EventEmitter();
+  }
+  clicked(clickedProduct: Product){
+    this.onProductSelected.emit(clickedProduct);
+  }
 }
 
 //Top level component goes last. Needs to know about its children.
@@ -79,7 +91,10 @@ class ProductsList {
   directives: [ProductsList],
   template: `
     <div class="inventory-app">
-      <products-list [productList]="products"></products-list>
+      <products-list
+        [productList]="products"
+        (onProductSelected)="productWasSelected($event)">
+      </products-list>
     </div>
   `
   // using the {{}} mustache tags is called template binding. Use value of expression inside brackets.
@@ -97,8 +112,31 @@ class InventoryApp {
       new Product('SWEETJACKET', 'Green Jacket', '/resources/images/products/jacket.jpg', ['Women', 'Apparel', 'Jackets & Vests'], 59.99),
       new Product('NEATHAT', 'Purple hat', '/resources/images/products/hat.jpg', ['Men', 'Accessories', 'Hats'], 79.99),
     ];
-
   }
 
+  productWasSelected(product: Product): void {
+    console.log('product clicked: ', product);
+  }
+  //“Data flows in to your component via input bindings and events flow out of your component through output bindings.”
+  // input is passed through square brackets and output is passed through parenthesis.
+  // in our inventoryapp template we are saying listen to the (outputDefinedInChildComponent)="methodToCallInParent($event)"
+  // "$event is a special variable representing the thing emitted to the output."
+
+  // in our child component that is sending the output, we create an output binding. bind a dom event to a method. (click)="myfunction()"
+  // specify output property names in emitting component annotation - outputs: ['nameForEmitter'],
+  // create an event emitter object attached to the defined output property in emitting controller class.
+  // nameForEmitter: EventEmitter<string>; (we are specifying the type of event emitted here)
+  // emit at the right time by calling a function from a dom event in child component template:
+  // <button (click)='emitMethod()'>
+  // then in the child component controller class:
+  // emitMethod(){
+  //  this.nameForEmitter.emit("the string i am emitting");
+  // }
+  // we answer for this in the parent template:
+  // <child-component (nameForEmitter)=parentMethod($event)></child-component>
+  // Then in the parent component class we would define the parentMethod:
+  // parentMethod(message: string){
+  //   console.log(message);
+  // }
 }
 bootstrap(InventoryApp);

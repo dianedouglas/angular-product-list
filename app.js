@@ -9,6 +9,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 /// <reference path="node_modules/angular2/typings/browser.d.ts"/>
 var browser_1 = require("angular2/platform/browser");
 var core_1 = require("angular2/core");
+var core_2 = require('angular2/core');
 // top level app component
 // this is the component decorator.
 // model
@@ -67,13 +68,18 @@ var ProductRow = (function () {
 }());
 var ProductsList = (function () {
     function ProductsList() {
+        this.onProductSelected = new core_2.EventEmitter();
     }
+    ProductsList.prototype.clicked = function (clickedProduct) {
+        this.onProductSelected.emit(clickedProduct);
+    };
     ProductsList = __decorate([
         core_1.Component({
             selector: 'products-list',
             directives: [ProductRow],
             inputs: ['productList'],
-            template: "\n  <h3 *ngFor=\"#currentProduct of productList\">{{ currentProduct.name }}</h3>\n  "
+            outputs: ['onProductSelected'],
+            template: "\n  <h3 *ngFor=\"#currentProduct of productList\"\n    (click)=clicked(currentProduct)>\n    {{ currentProduct.name }}</h3>\n  "
         })
     ], ProductsList);
     return ProductsList;
@@ -89,11 +95,14 @@ var InventoryApp = (function () {
             new Product('NEATHAT', 'Purple hat', '/resources/images/products/hat.jpg', ['Men', 'Accessories', 'Hats'], 79.99),
         ];
     }
+    InventoryApp.prototype.productWasSelected = function (product) {
+        console.log('product clicked: ', product);
+    };
     InventoryApp = __decorate([
         core_1.Component({
             selector: 'inventory-app',
             directives: [ProductsList],
-            template: "\n    <div class=\"inventory-app\">\n      <products-list [productList]=\"products\"></products-list>\n    </div>\n  "
+            template: "\n    <div class=\"inventory-app\">\n      <products-list\n        [productList]=\"products\"\n        (onProductSelected)=\"productWasSelected($event)\">\n      </products-list>\n    </div>\n  "
         })
     ], InventoryApp);
     return InventoryApp;
