@@ -16,5 +16,7 @@ gulp.task('serve', function() {
 - npm install
 - npm install gulp -g
 - npm install typescript -g
+- apm install atom-typescript
+- atom .
 - gulp serve
 */
