@@ -117,9 +117,9 @@ var InventoryApp = (function () {
         // when we make a new instance of the component, this constructor is called.
         // setup tasks go here. To test it out, we're creating a product and storing it in the instance variable.
         this.products = [
-            new Product('MYSHOES', 'Black Runners', '/resources/images/shoes.jpg', ['Men', 'Shoes', 'Running Shoes'], 39.99),
-            new Product('SWEETJACKET', 'Green Jacket', '/resources/images/jacket.jpg', ['Women', 'Apparel', 'Jackets & Vests'], 59.99),
-            new Product('NEATHAT', 'Purple hat', '/resources/images/hat.jpg', ['Men', 'Accessories', 'Hats'], 79.99),
+            new Product('MYSHOES', 'Black Runners', 'app/images/products/shoes.jpg', ['Men', 'Shoes', 'Running Shoes'], 39.99),
+            new Product('SWEETJACKET', 'Green Jacket', 'app/images/products/jacket.jpg', ['Women', 'Apparel', 'Jackets & Vests'], 59.99),
+            new Product('NEATHAT', 'Purple hat', 'app/images/products/hat.jpg', ['Men', 'Accessories', 'Hats'], 79.99),
         ];
     }
     InventoryApp.prototype.productWasSelected = function (product) {
